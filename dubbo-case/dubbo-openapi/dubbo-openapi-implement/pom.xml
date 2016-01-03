@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.hyf</groupId>
-		<artifactId>dubbo-case</artifactId>
+		<artifactId>dubbo-openapi</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>dubbo-openapi-interface</artifactId>
+	<artifactId>dubbo-openapi-implement</artifactId>
 	<packaging>jar</packaging>
-	<name>dubbo-openapi-interface</name>
+	<name>dubbo-openapi-implement</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -19,6 +19,16 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.hyf</groupId>
+			<artifactId>dubbo-openapi-interface</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hyf</groupId>
+			<artifactId>dubbo-utils</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 </project>

@@ -8,9 +8,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>dubbo-provider</artifactId>
+	<artifactId>dubbo-openapi</artifactId>
 	<packaging>pom</packaging>
-	<name>dubbo-provider</name>
+	<name>dubbo-openapi</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -22,7 +22,8 @@
 	</dependencies>
 
 	<modules>
-		<module>dubbo-provider-buness</module>
-		<module>dubbo-provider-start</module>
+		<module>dubbo-openapi-interface</module>
+		<module>dubbo-openapi-implement</module>
 	</modules>
+
 </project>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+ 
+    <!-- 提供方应用名称信息,用于计算依赖关系,这个相当于起一个名字,我们dubbo管理页面比较清晰是哪个应用暴露出来的 -->
+    <dubbo:application name="dubbo-provider-business"  />
+ 
+ 	<!-- 使用zookeeper注册中心暴露服务地址 -->
+ 	<!--  
+	<dubbo:registry address="192.168.88.10:2181,192.168.88.11:2181,192.168.88.12:2181" protocol="zookeeper"/>
+	-->
+	<dubbo:registry address="N/A" />	
+	
+	<!-- 监控中心协议，如果为protocol="registry"，表示从注册中心发现监控中心地址，否则直连监控中心 -->
+	<!-- <dubbo:monitor protocol="registry" /> -->
+	
+	<!-- 
+	threads 服务线程池大小(固定大小)
+	timeout 远程服务调用超时时间(毫秒)
+	retries 远程服务调用重试次数，不包括第一次调用，不需要重试请设为0
+	loadbalance 负载均衡策略，可选值：random,roundrobin,leastactive，分别表示：随机，轮循，最少活跃调用
+	-->
+	<dubbo:provider retries="0" threads="100" timeout="40000" loadbalance="random" />
+ 
+    <!-- 用dubbo协议在20080端口暴露服务 -->
+    <dubbo:protocol name="dubbo" port="20080" />
+ 
+ 	<!-- 基础服务系统 -->
+	<dubbo:service  interface="com.hyf.openapi.interfaces.ApiInterface" ref="providerService"/>
+ 
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="providerService" class="com.hyf.openapi.impl.ApiInterfaceServiceImpl" />
+    
+</beans>
