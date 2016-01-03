@@ -13,12 +13,17 @@
 	<packaging>jar</packaging>
 	<name>dubbo-customer-start</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>com.hyf</groupId>
+			<artifactId>dubbo-customer-business</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

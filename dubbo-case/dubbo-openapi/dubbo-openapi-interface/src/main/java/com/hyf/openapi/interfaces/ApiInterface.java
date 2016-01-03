@@ -1,6 +1,5 @@
 package com.hyf.openapi.interfaces;
 
-import java.util.Map;
 
 /**
  * dubbo 用来开发服务注册的，就是提供服务的接口
@@ -15,6 +14,6 @@ public interface ApiInterface
 	 * @param postdata 客户端传入的map集合数据
 	 * @return 调用接口后返回的数据
 	 */
-	public String doPost(Map<String, String> postdata) throws Exception;
+	public String doPost(String postdata) throws Exception;
 	
 }

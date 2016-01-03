@@ -12,6 +12,7 @@ import com.hyf.openapi.entity.MethodArgs;
 import com.hyf.openapi.interfaces.ApiInterface;
 import com.hyf.openapi.utils.DataValidator;
 import com.hyf.openapi.utils.MethodArgsUtil;
+import com.hyf.utils.CheckJSONDataUtil;
 import com.hyf.utils.MethodReflect;
 
 public class ApiInterfaceServiceImpl implements ApiInterface
@@ -28,12 +29,13 @@ public class ApiInterfaceServiceImpl implements ApiInterface
 	 * @throws Exception 
 	 */
 	@Override
-	public String doPost(Map<String, String> postdata) throws Exception
+	public String doPost(String postdata) throws Exception
 	{
 		try
 		{
 			// 1、获取方法名称、服务名称、参数 数据的对象
-			MethodArgs methodargs = MethodArgsUtil.checkPostMethodData(postdata);
+			Map<String,Object> dataMap = CheckJSONDataUtil.checkJSONData(postdata);
+			MethodArgs methodargs = MethodArgsUtil.checkPostMethodData(dataMap);
 			// 2、获取传入调用接口方法参数的数据
 			String validData = methodargs.getMethodData();
 			// 3、获取传入调用接口方法参数的数据

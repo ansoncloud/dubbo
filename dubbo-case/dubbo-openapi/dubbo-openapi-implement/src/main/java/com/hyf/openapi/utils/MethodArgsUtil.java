@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.hyf.exception.MyException;
 import com.hyf.openapi.entity.MethodArgs;
+import com.hyf.utils.ObjectParser;
 
 public class MethodArgsUtil
 {
@@ -14,7 +15,7 @@ public class MethodArgsUtil
 	 * @param postdata 传入数据
 	 * @return 方法名称、服务名称、参数数据对象
 	 */
-	public static MethodArgs checkPostMethodData(Map<String, String> postdata) throws Exception
+	public static MethodArgs checkPostMethodData(Map<String,Object> postdata) throws Exception
 	{
 		MethodArgs methodArgs = new MethodArgs();
 		try
@@ -22,7 +23,7 @@ public class MethodArgsUtil
 			String servicename = "";
 			String methodname = "";
 			String args = "";
-			String method = postdata.containsKey("method") ? postdata.get("method") : "";
+			String method = postdata.containsKey("method")?ObjectParser.toString(postdata.get("method")):"";
 			if (method == null || "".equals(method))
 			{
 				throw new MyException(11, "method参数为空.");
