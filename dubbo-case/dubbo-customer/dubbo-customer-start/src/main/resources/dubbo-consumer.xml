@@ -6,14 +6,12 @@
     http://code.alibabatech.com/schema/dubbo        
     http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样,如果是消费方又是提供方,那就去年这行,在applicationContext.xml里引入dubbo-provider.xml文件,否则不用这个文件 -->
+	<!-- 
 	<dubbo:application name="dubbo-customer-business" />
+	 -->
 	
-	<!-- 使用zookeeper注册中心暴露发现服务地址 -->
-	<!-- <dubbo:registry address="192.168.87.25:2181" protocol="zookeeper"/> -->
-	<dubbo:registry address="N/A" protocol="zookeeper"/>
-	
-	<!-- 提供者服务系统 -->
-	<dubbo:reference id="providerService" interface="com.hyf.openapi.interfaces.ApiInterface" />
+	<!-- 提供者服务系统,用来在消费服务里要调用提供者服务就要加上去，否则不用加 -->
+	<dubbo:reference id="providerService" interface="com.hyf.openapi.interfaces.ApiInterface" timeout="10000" check="false" url="dubbo://127.0.0.1:80001"/>
 
 </beans>

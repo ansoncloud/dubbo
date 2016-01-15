@@ -19,7 +19,7 @@ public class TestServiceImpl
 	{
 		Map<String,Object> dataMap = CheckJSONDataUtil.checkJSONData(data);
 		ApiInterface service = (ApiInterface) GlobalContainer.getApplicationContext().getBean("providerService");
-		dataMap.put("method", "com.hyf.test.get");
+		dataMap.put("method", "maplemart.provider.test.get");
 		String resultdata = service.doPost(JSONObject.fromObject(dataMap).toString());
 		Map<String, Object> result = new HashMap<String,Object>();
 		result.put("total", 1);

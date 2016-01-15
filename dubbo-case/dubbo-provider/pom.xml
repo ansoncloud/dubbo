@@ -18,7 +18,11 @@
 	</properties>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>com.hyf</groupId>
+			<artifactId>dubbo-openapi-implement</artifactId>
+			<version>[0,)</version>
+		</dependency>
 	</dependencies>
 
 	<modules>

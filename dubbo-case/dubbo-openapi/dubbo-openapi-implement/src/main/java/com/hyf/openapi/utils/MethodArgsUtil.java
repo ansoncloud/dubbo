@@ -86,8 +86,10 @@ public class MethodArgsUtil
 
 	public static void main(String[] args)
 	{
-		System.out.println(getServiceName("masget.finance.voucher.detail.get"));
-		System.out.println(getMethodName("masget.finance.voucher.detail.get"));
+		System.out.println(getServiceName("maplemart.openapi.test.get"));
+		System.out.println(getMethodName("maplemart.openapi.test.get"));
+		System.out.println(getServiceName("maplemart.openapi.test.all.get"));
+		System.out.println(getMethodName("maplemart.openapi.test.all.get"));
 	}
 
 }

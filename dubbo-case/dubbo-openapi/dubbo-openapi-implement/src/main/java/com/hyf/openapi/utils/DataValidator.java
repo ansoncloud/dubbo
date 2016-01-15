@@ -18,9 +18,8 @@ import com.google.gson.stream.JsonReader;
 import com.hyf.exception.MyException;
 import com.hyf.utils.ObjectParser;
 
-//singleton class
-/*
- * validate json example
+/**
+ * validate json example(用来过滤客户端传入的参数,如果json文件里没有写的参数,就不会传入到后台代码里)
  * {
  *  get: {							//第一层 key:接口名称，value: 接口需要传入的json参数格式对象
  * 	 companyid: "Long",				//key:字段名，value:类型名称
@@ -57,8 +56,8 @@ public class DataValidator
 	 * @createtime 2016年1月2日
 	 * @param validateObject 接口服务对象
 	 * @param methodName 方法名称
-	 * @param data 传入参数 数据 
-	 * @return 返回json校验后的参数数据 
+	 * @param data 传入参数 数据
+	 * @return 返回json校验后的参数数据
 	 * @throws Exception
 	 */
 	public String getValidData(Object validateObject, String methodName, String data) throws Exception
@@ -68,18 +67,12 @@ public class DataValidator
 			// 1、找校验文件
 			JsonObject classJson = getValidateMap(validateObject);
 			// 1.1、没有校验文件，不需要校验
-			if (classJson == null || !classJson.has(methodName))
-			{
-				return data;
-			}
+			if (classJson == null || !classJson.has(methodName)) return data;
 			// 1.2、找到校验文件
 			// 2、获取当前方法的json文件的数据，并解析
 			JsonElement methodJson = classJson.get(methodName);
 			// 2、当前方法的json文件的数据解析为空就直接返回当前数据
-			if (data.isEmpty() && (methodJson.isJsonNull() || methodJson.toString().equals("[]") || methodJson.toString().equals("{}")))
-			{
-				return data;
-			}
+			if (data.isEmpty() && (methodJson.isJsonNull() || methodJson.toString().equals("[]") || methodJson.toString().equals("{}"))) return data;
 			// 2、当前方法的json文件的数据不是json数组对象和json对象，也就是数组 对象
 			if (!methodJson.isJsonArray() && !methodJson.isJsonObject())
 			{
@@ -112,7 +105,7 @@ public class DataValidator
 		}
 		catch (Exception e)
 		{
-			throw new MyException(11, "数据校验失败."+e.getMessage());
+			throw new MyException(11, "数据校验失败." + e.getMessage());
 		}
 	}
 
@@ -121,7 +114,7 @@ public class DataValidator
 	 * @author 黄永丰
 	 * @createtime 2016年1月3日
 	 * @param validateJson 传入参数
-	 * @param dataJson json文件里的参数 
+	 * @param dataJson json文件里的参数
 	 * @return 返回查检过滤后的正确参数
 	 * @throws Exception
 	 */
@@ -151,10 +144,8 @@ public class DataValidator
 				String keyName = key.replace("(option)", "");
 				if (!dataObject.has(keyName))
 				{
-					if (keyName.equals(key))
-						throw new MyException(11,"找不到"+keyName+"参数.");
-					else
-						continue;// 可选字段
+					if (keyName.equals(key)) throw new MyException(11, "找不到" + keyName + "参数.");
+					else continue;// 可选字段
 				}
 				if (entry.getValue().isJsonArray() || entry.getValue().isJsonObject())
 				{
@@ -184,7 +175,7 @@ public class DataValidator
 		}
 		else
 		{
-			throw new MyException(11,gson.toJson(dataJson)+"数据格式有误.");
+			throw new MyException(11, gson.toJson(dataJson) + "数据格式有误.");
 		}
 	}
 
@@ -192,7 +183,7 @@ public class DataValidator
 	 * 查检数据类型
 	 * @author 黄永丰
 	 * @createtime 2016年1月3日
-	 * @param param json文件参数数据 
+	 * @param param json文件参数数据
 	 * @param type 传入数据类型
 	 * @return 返回对应的数据类型
 	 * @throws Exception
@@ -201,58 +192,34 @@ public class DataValidator
 	{
 		if (type.equals("long"))
 		{
-			if (param.isJsonNull())
-			{
-				return param;
-			}
+			if (param.isJsonNull()) return param;
 			return new JsonPrimitive(param.getAsLong());
 		}
 		else if (type.equals("int") || type.equals("integer"))
 		{
-			if (param.isJsonNull())
-			{
-				return param;
-			}
+			if (param.isJsonNull()) return param;
 			return new JsonPrimitive(param.getAsInt());
 		}
 		else if (type.equals("double"))
 		{
-			if (param.isJsonNull())
-			{
-				return param;
-			}
+			if (param.isJsonNull()) return param;
 			return new JsonPrimitive(param.getAsDouble());
 		}
 		else if (type.equals("date"))
 		{
-			if (param.isJsonNull())
-			{
-				return param;
-			}
+			if (param.isJsonNull()) return param;
 			Date date = ObjectParser.toDate(param.getAsString());
-			if (date != null)
-			{
-				return new JsonPrimitive(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
-			}
-			else
-			{
-				throw new Exception("日期类型错误");
-			}
+			if (date != null) return new JsonPrimitive(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+			else throw new Exception("日期类型错误");
 		}
 		else if (type.equals("short"))
 		{
-			if (param.isJsonNull())
-			{
-				return param;
-			}
+			if (param.isJsonNull()) return param;
 			return new JsonPrimitive(param.getAsShort());
 		}
 		else
 		{
-			if (param.isJsonNull())
-			{
-				return param;
-			}
+			if (param.isJsonNull()) return param;
 			return new JsonPrimitive(param.getAsString());
 		}
 	}
@@ -269,14 +236,9 @@ public class DataValidator
 	{
 		// validateObject:bean class
 		String className = null;
-		if (validateObject.getClass().getSuperclass() == Object.class)
-			className = validateObject.getClass().getSimpleName();
-		else
-			className = validateObject.getClass().getSuperclass().getSimpleName();
-		if (validateMap.containsKey(className))
-		{
-			return validateMap.get(className);
-		}
+		if (validateObject.getClass().getSuperclass() == Object.class) className = validateObject.getClass().getSimpleName();
+		else className = validateObject.getClass().getSuperclass().getSimpleName();
+		if (validateMap.containsKey(className)) return validateMap.get(className);
 		JsonObject result = null;
 		InputStream filestream = null;
 		filestream = validateObject.getClass().getResourceAsStream(className + ".json");
@@ -292,6 +254,5 @@ public class DataValidator
 		validateMap.put(className, result);
 		return result;
 	}
-	
 
 }

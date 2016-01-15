@@ -1,0 +1,19 @@
+dubbo环境搭建与调用简单案例
+1、调用接口的接口类
+	dubbo-openapi 
+		--dubbo-openapi-interface dubbo暴露的接口
+		--dubbo-openapi-implement dubbo暴露的接口调用的实现
+		
+2、提供者
+	dubbo-provider
+		--dubbo-provider-business 提供者接口业务实现
+		--dubbo-provider-start 提供者启动
+		
+3、消费者
+	dubbo-customer
+		--dubbo-customer-business 消费者接口业务实现,里面如何调用提供者接口
+		--dubbo-customer-start 消费者启动
+		
+4、web调用提供者和消费者接口
+	dubbo-web 在就里提供controller去调用提供者和消费者接口请求
+	

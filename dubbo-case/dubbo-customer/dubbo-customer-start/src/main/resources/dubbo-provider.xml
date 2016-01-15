@@ -8,7 +8,7 @@
     http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
  
     <!-- 提供方应用名称信息,用于计算依赖关系,这个相当于起一个名字,我们dubbo管理页面比较清晰是哪个应用暴露出来的 -->
-    <dubbo:application name="dubbo-provider-business"  />
+    <dubbo:application name="dubbo-customer-business"  />
  
  	<!-- 使用zookeeper注册中心暴露服务地址 -->
  	<!--  
@@ -28,12 +28,12 @@
 	<dubbo:provider retries="0" threads="100" timeout="40000" loadbalance="random" />
  
     <!-- 用dubbo协议在20080端口暴露服务 -->
-    <dubbo:protocol name="dubbo" port="80001" />
+    <dubbo:protocol name="dubbo" port="80002" />
  
  	<!-- 基础服务系统 -->
-	<dubbo:service  interface="com.hyf.openapi.interfaces.ApiInterface" ref="providerService"/>
+	<dubbo:service  interface="com.hyf.openapi.interfaces.ApiInterface" ref="customerService"/>
  
     <!-- 和本地bean一样实现服务 -->
-    <bean id="providerService" class="com.hyf.openapi.impl.ApiInterfaceServiceImpl" />
+    <bean id="customerService" class="com.hyf.openapi.impl.ApiInterfaceServiceImpl" />
     
 </beans>

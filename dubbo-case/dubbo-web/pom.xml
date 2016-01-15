@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.hyf</groupId>
-		<artifactId>dubbo-customer</artifactId>
+		<artifactId>dubbo-case</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>dubbo-customer-web</artifactId>
+	<artifactId>dubbo-web</artifactId>
 	<packaging>war</packaging>
-	<name>dubbo-customer-web Maven Webapp</name>
+	<name>dubbo-web Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
@@ -22,13 +22,27 @@
 			<version>3.1.0</version>
 		</dependency>
 		<!-- web servlet包结束 -->
+		<!-- 提供接口包开始 -->
+		<dependency>
+			<groupId>com.hyf</groupId>
+			<artifactId>dubbo-openapi-interface</artifactId>
+			<version>[0,)</version>
+		</dependency>
+		<!-- 提供接口包结束 -->
+		<!-- 工具包开始 -->
+		<dependency>
+			<groupId>com.hyf</groupId>
+			<artifactId>dubbo-utils</artifactId>
+			<version>[0,)</version>
+		</dependency>
+		<!-- 工具包结束 -->
+
 	</dependencies>
-	
+
 	<build>
-		<finalName>dubbo-customer-web</finalName>
+		<finalName>dubbo-web</finalName>
 		<pluginManagement />
 		<plugins>
-			<!-- 编译 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -45,7 +59,6 @@
 						<bootclasspath>${java.home}/lib/rt.jar</bootclasspath>
 					</compilerArguments>
 				</configuration>
-
 				<dependencies>
 					<dependency>
 						<groupId>org.codehaus.plexus</groupId>

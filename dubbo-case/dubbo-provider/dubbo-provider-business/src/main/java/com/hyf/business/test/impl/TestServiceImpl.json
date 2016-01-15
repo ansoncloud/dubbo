@@ -1,0 +1,14 @@
+{
+	get:
+	{
+		id:"Long",
+		name:"String"
+	}
+	,getAll:
+	{
+		id:"Long",
+		name:"String",
+		mail(option):"String"
+	}
+
+}

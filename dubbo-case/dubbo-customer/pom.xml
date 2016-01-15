@@ -18,13 +18,16 @@
 	</properties>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>com.hyf</groupId>
+			<artifactId>dubbo-openapi-implement</artifactId>
+			<version>[0,)</version>
+		</dependency>
 	</dependencies>
 
 	<modules>
 		<module>dubbo-customer-business</module>
 		<module>dubbo-customer-start</module>
-		<module>dubbo-customer-web</module>
 	</modules>
-	
+
 </project>
