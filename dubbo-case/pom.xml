@@ -14,7 +14,7 @@
 	<!-- 私有仓库 -->
 	<repositories>
 		<repository>
-			<id>public</id>  <!--这个ID�?��与你新建的组group ID�?�� -->
+			<id>public</id><!--这个ID需要与你新建的组group ID一致 -->
 			<name>Public Repository</name>
 			<url>http://192.168.87.89:8081/nexus/content/groups/public/</url>
 		</repository>
@@ -52,7 +52,7 @@
 			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- spring包开�? -->
+		<!-- spring包开始 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -99,7 +99,7 @@
 			<version>${spring_version}</version>
 		</dependency>
 		<!-- spring包结结束 -->
-		<!-- zookeeper包开�? -->
+		<!-- zookeeper包开始 -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
@@ -110,8 +110,8 @@
 			<artifactId>zkclient</artifactId>
 			<version>0.1</version>
 		</dependency>
-		<!-- zookeeper包结�? -->
-		<!-- dubbox包开�? -->
+		<!-- zookeeper包结束 -->
+		<!-- dubbox包开始 -->
 		<dependency>
 			<groupId>com.masget</groupId>
 			<artifactId>dubbox</artifactId>
@@ -122,7 +122,7 @@
 			<artifactId>javassist</artifactId>
 			<version>3.15.0-GA</version>
 		</dependency>
-		<!-- dubbox包结�? -->
+		<!-- dubbox包结束 -->
 		<!-- JSON工具包开始 -->
 		<dependency>
 			<groupId>commons-collections</groupId>
@@ -196,6 +196,7 @@
 				<configuration>
 					<source>${java_source_version}</source>
 					<target>${java_target_version}</target>
+					<encoding>${encoding}</encoding>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -204,12 +205,14 @@
 				<directory>src/main/java</directory>
 				<includes>
 					<include>**/*.xml</include>
+					<include>**/*.json</include>
 				</includes>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
 					<include>**/*.*</include>
+					<include>**/*</include>
 				</includes>
 			</resource>
 		</resources>
