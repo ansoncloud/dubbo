@@ -17,10 +17,10 @@
 	<dubbo:registry address="N/A" protocol="zookeeper"/>
 	
 	<!-- 提供者服务系统 -->
-	<!-- <dubbo:reference id="providerService" interface="com.hyf.openapi.interfaces.ApiInterface" timeout="10000" check="false"/> -->
+	<!-- <dubbo:reference id="providerService" interface="com.hyf.openapi.interfaces.ApiInterface" timeout="30000" check="false"/> -->
 	<!-- 加url就是直连,不加就直接在zookeeper里自动分配找 -->
-	<dubbo:reference id="providerService" interface="com.hyf.openapi.interfaces.ApiInterface" timeout="10000" check="false" url="dubbo://127.0.0.1:20001"/>
+	<dubbo:reference id="providerService" interface="com.hyf.openapi.interfaces.ApiInterface" timeout="30000" check="false" url="dubbo://127.0.0.1:20001"/>
 	<!-- 消费者服务系统 -->
-	<dubbo:reference id="customerService" interface="com.hyf.openapi.interfaces.ApiInterface" timeout="10000" check="false" url="dubbo://127.0.0.1:20002"/>
+	<dubbo:reference id="customerService" interface="com.hyf.openapi.interfaces.ApiInterface" timeout="30000" check="false" url="dubbo://127.0.0.1:20002"/>
 
 </beans>

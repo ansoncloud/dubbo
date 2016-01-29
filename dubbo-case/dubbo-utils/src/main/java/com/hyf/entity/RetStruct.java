@@ -3,8 +3,9 @@ package com.hyf.entity;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import net.sf.json.JSONObject;
+
+import com.hyf.utils.IJsonConfig;
 
 public class RetStruct
 {
@@ -65,7 +66,7 @@ public class RetStruct
 	@Override
 	public String toString()
 	{
-		Gson gson = new GsonBuilder().serializeNulls().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-		return gson.toJson(retMap);
+		String result = JSONObject.fromObject(retMap,IJsonConfig.getInstance()).toString();
+		return result;
 	}
 }

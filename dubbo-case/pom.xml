@@ -175,7 +175,7 @@
 			<classifier>sources</classifier>
 		</dependency>
 		<!-- JSON与xml互转工具包结�? -->
-		<!-- google的json包开�? -->
+		<!-- google的json包开始 -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>

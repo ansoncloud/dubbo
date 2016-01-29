@@ -23,6 +23,7 @@ public class CheckJSONDataUtil
 	 * @param data 传入JSON格式实字符串
 	 * @return Map<String,Object> 返回JSON转换成Map数据
 	 */
+	@SuppressWarnings("unchecked")
 	public static Map<String,Object> checkJSONData(String data)
 	{
 		if(data == null || "".equals(data.trim()))
@@ -32,7 +33,7 @@ public class CheckJSONDataUtil
 		Map<String,Object> dataMap = new HashMap<String,Object>();
 		try
 		{
-			dataMap = JSONObject.fromObject(data);
+			dataMap = JSONObject.fromObject(data,IJsonConfig.getInstance());
 		}
 		catch(Exception e)
 		{

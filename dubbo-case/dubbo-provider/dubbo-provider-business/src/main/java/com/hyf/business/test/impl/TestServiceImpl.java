@@ -1,5 +1,7 @@
 package com.hyf.business.test.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +47,10 @@ public class TestServiceImpl
 		{
 			Map<String, Object> result = new HashMap<String,Object>();
 			result.put("total", 1);
-			result.put("rows", data);
+			result.put("rows", dataMap);
+			result.put("time", new Date());
+			result.put("time2", new java.sql.Date(System.currentTimeMillis()));
+			result.put("time3", new Timestamp(System.currentTimeMillis()));
 			return new RetStruct("调用provider里的接口成功.","data",result).toString();
 		}
 		catch (Exception e)

@@ -42,7 +42,7 @@ public class TestServiceImpl
 		String resultdata = service.doPost(JSONObject.fromObject(dataMap).toString());
 		Map<String, Object> result = new HashMap<String,Object>();
 		result.put("total", 1);
-		result.put("rows", "消费者customerService服务的提供者TestServiceImpl类的get方法调用结果:"+resultdata);
-		return new RetStruct("调用service服务成功.","data",result).toString();
+		result.put("rows",dataMap);
+		return new RetStruct("消费者customerService服务的提供者TestServiceImpl类的get方法调用成功.","data",result).toString();
 	}
 }
