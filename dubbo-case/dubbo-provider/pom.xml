@@ -26,7 +26,7 @@
 	</dependencies>
 
 	<modules>
-		<module>dubbo-provider-buness</module>
+		<module>dubbo-provider-business</module>
 		<module>dubbo-provider-start</module>
 	</modules>
 </project>
