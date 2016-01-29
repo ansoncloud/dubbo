@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>com.hyf</groupId>
 			<artifactId>dubbo-provider-business</artifactId>
-			<version>${project.version}</version>
+			<version>[0,)</version>
 		</dependency>
 	</dependencies>
 

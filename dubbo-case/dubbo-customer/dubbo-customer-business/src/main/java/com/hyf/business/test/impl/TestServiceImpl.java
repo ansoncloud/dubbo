@@ -12,10 +12,29 @@ import com.hyf.global.GlobalContainer;
 import com.hyf.openapi.interfaces.ApiInterface;
 import com.hyf.utils.CheckJSONDataUtil;
 
+/**
+ * 接口命名规则:(maplemart(公司英文名称).工程名.类名(不加ServiceImpl).方法倒数第一个单词全小写.(按顺序倒数..).方法第一个单词全小写)
+ * 如: maplemart.provider.test.get 接口的类名是:TestServiceImpl 方法名是:get
+ *    maplemart.provider.test.all.get 接口的类名是:TestServiceImpl 方法名是:getAll
+ *    maplemart.provider.test.type.all.get 接口的类名是:TestServiceImpl 方法名是:getAllType)
+ * @author 黄永丰
+ * @createtime 2015年12月08日
+ * @version 1.0
+ */
 @Service
 public class TestServiceImpl
 {
-	public String getTestCom(String data) throws Exception
+	
+	/**
+	 * 测试，dubbo接口
+	 * @interfaceName maplemart.customer.test.get
+	 * @author 黄永丰
+	 * @createtime 2016年1月3日
+	 * @param data {"id":xx,"name":xx}
+	 * @return {ret: 0,message:"调用service服务成功.","data":{"total":xx,"rows":{"get":xx}}}
+	 * @throws Exception
+	 */
+	public String get(String data) throws Exception
 	{
 		Map<String,Object> dataMap = CheckJSONDataUtil.checkJSONData(data);
 		ApiInterface service = (ApiInterface) GlobalContainer.getApplicationContext().getBean("providerService");

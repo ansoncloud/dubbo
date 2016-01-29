@@ -28,7 +28,7 @@
 	<dubbo:provider retries="0" threads="100" timeout="40000" loadbalance="random" />
  
     <!-- 用dubbo协议在20080端口暴露服务 -->
-    <dubbo:protocol name="dubbo" port="80002" />
+    <dubbo:protocol name="dubbo" port="20002" />
  
  	<!-- 基础服务系统 -->
 	<dubbo:service  interface="com.hyf.openapi.interfaces.ApiInterface" ref="customerService"/>

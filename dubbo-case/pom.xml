@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.hyf</groupId>
@@ -42,7 +43,7 @@
 		<maven_compiler_plugin>3.3</maven_compiler_plugin>
 		<plexus_compiler_javac>1.8.1</plexus_compiler_javac>
 		<maven_shade_plugin>1.7.1</maven_shade_plugin>
-		<spring_version>3.2.9.RELEASE</spring_version>
+		<spring_version>4.2.4.RELEASE</spring_version>
 	</properties>
 
 	<dependencies>
@@ -52,7 +53,7 @@
 			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- spring包开�?-->
+		<!-- spring包开�? -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -98,8 +99,13 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring_version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.8</version>
+		</dependency>
 		<!-- spring包结结束 -->
-		<!-- zookeeper包开�?-->
+		<!-- zookeeper包开�? -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
@@ -110,8 +116,8 @@
 			<artifactId>zkclient</artifactId>
 			<version>0.1</version>
 		</dependency>
-		<!-- zookeeper包结�?-->
-		<!-- dubbox包开�?-->
+		<!-- zookeeper包结�? -->
+		<!-- dubbox包开�? -->
 		<dependency>
 			<groupId>com.masget</groupId>
 			<artifactId>dubbox</artifactId>
@@ -122,8 +128,8 @@
 			<artifactId>javassist</artifactId>
 			<version>3.15.0-GA</version>
 		</dependency>
-		<!-- dubbox包结�?-->
-		<!-- JSON工具包开�?-->
+		<!-- dubbox包结�? -->
+		<!-- JSON工具包开�? -->
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
@@ -155,8 +161,8 @@
 			<version>2.4</version>
 			<classifier>jdk15</classifier>
 		</dependency>
-		<!-- JSON工具包结�?-->
-		<!-- JSON与xml互转工具包开�?-->
+		<!-- JSON工具包结�? -->
+		<!-- JSON与xml互转工具包开�? -->
 		<dependency>
 			<groupId>xom</groupId>
 			<artifactId>xom</artifactId>
@@ -168,8 +174,8 @@
 			<version>1.2.5</version>
 			<classifier>sources</classifier>
 		</dependency>
-		<!-- JSON与xml互转工具包结�?-->
-		<!-- google的json包开�?-->
+		<!-- JSON与xml互转工具包结�? -->
+		<!-- google的json包开�? -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -185,8 +191,8 @@
 		<module>dubbo-http</module>
 		<module>dubbo-webservice</module>
 		<module>dubbo-openapi</module>
-    <module>dubbo-web</module>
-  </modules>
+		<module>dubbo-web</module>
+	</modules>
 
 	<build>
 		<plugins>

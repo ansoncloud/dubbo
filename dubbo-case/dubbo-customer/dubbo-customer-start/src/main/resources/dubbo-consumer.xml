@@ -12,6 +12,6 @@
 	 -->
 	
 	<!-- 提供者服务系统,用来在消费服务里要调用提供者服务就要加上去，否则不用加 -->
-	<dubbo:reference id="providerService" interface="com.hyf.openapi.interfaces.ApiInterface" timeout="10000" check="false" url="dubbo://127.0.0.1:80001"/>
+	<dubbo:reference id="providerService" interface="com.hyf.openapi.interfaces.ApiInterface" timeout="10000" check="false" url="dubbo://127.0.0.1:20001"/>
 
 </beans>

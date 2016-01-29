@@ -36,6 +36,13 @@
 			<version>[0,)</version>
 		</dependency>
 		<!-- 工具包结束 -->
+		<!-- @ResponseBody注解返回json格式依赖包开始 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>2.5.4</version>
+		</dependency>
+		<!-- @ResponseBody注解返回json格式依赖包结束 -->
 
 	</dependencies>
 

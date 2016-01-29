@@ -14,6 +14,6 @@ public interface ApiInterface
 	 * @param postdata 客户端传入的map集合数据
 	 * @return 调用接口后返回的数据
 	 */
-	public String doPost(String postdata) throws Exception;
+	public String doPost(String postdata);
 	
 }

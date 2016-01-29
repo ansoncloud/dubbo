@@ -10,7 +10,6 @@ import com.hyf.exception.MyException;
 import com.hyf.utils.CheckJSONDataUtil;
 
 /**
- * 提供包装类型相关接口 
  * 接口命名规则:(maplemart(公司英文名称).工程名.类名(不加ServiceImpl).方法倒数第一个单词全小写.(按顺序倒数..).方法第一个单词全小写)
  * 如: maplemart.provider.test.get 接口的类名是:TestServiceImpl 方法名是:get
  *    maplemart.provider.test.all.get 接口的类名是:TestServiceImpl 方法名是:getAll
@@ -34,6 +33,14 @@ public class TestServiceImpl
 	public String get(String data) throws Exception
 	{
 		Map<String, Object> dataMap = CheckJSONDataUtil.checkJSONData(data);
+		if (dataMap.get("id") == null || "".equals(dataMap.get("id")))
+		{
+			throw new MyException(-1, "参数id不能为空.");
+		}
+		if (dataMap.get("name") == null || "".equals(dataMap.get("name").toString().trim()))
+		{
+			throw new MyException(-1, "参数name不能为空.");
+		}
 		try
 		{
 			Map<String, Object> result = new HashMap<String,Object>();
@@ -62,6 +69,14 @@ public class TestServiceImpl
 	public String getAll(String data) throws Exception
 	{
 		Map<String, Object> dataMap = CheckJSONDataUtil.checkJSONData(data);
+		if (dataMap.get("id") == null || "".equals(dataMap.get("id")))
+		{
+			throw new MyException(-1, "参数id不能为空.");
+		}
+		if (dataMap.get("name") == null || "".equals(dataMap.get("name").toString().trim()))
+		{
+			throw new MyException(-1, "参数name不能为空.");
+		}
 		try
 		{
 			Map<String, Object> result = new HashMap<String,Object>();

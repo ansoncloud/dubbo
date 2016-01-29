@@ -1,13 +1,10 @@
 package com.hyf.utils;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.sf.json.JSONObject;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.hyf.exception.MyException;
 import com.hyf.openapi.interfaces.ApiInterface;
 
 public class ApiUtil
@@ -19,27 +16,21 @@ public class ApiUtil
 	 * 调用base服务
 	 * @author HuangYongFeng
 	 * @createtime 2015年7月21日
-	 * @param request request对象
-	 * @param session 工具session
+	 * @param serviceName 服务名称
 	 * @param method 接口方法名称
 	 * @param data 传入数据
 	 * @return 调用完接口数据
 	 */
-	public static String dubbo(HttpServletRequest request,String serviceName,String method,String data)
+	@SuppressWarnings("resource")
+	public static String dubbo(String serviceName,String interfaceName,String data)
 	{
-		try
-		{
-			ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 			ApiInterface service = (ApiInterface) ctx.getBean(serviceName);
 			JSONObject obj = JSONObject.fromObject(data);
-			obj.put("method",method);
+			obj.put("interfaceName",interfaceName);
+			obj.put("data", data);
 			String result = service.doPost(obj.toString());
 			return result;
-		}
-		catch (Exception e)
-		{
-			throw new MyException(-1, "调用接口失败." + e.getMessage(),e);
-		}
 	}
 
 	

@@ -20,12 +20,13 @@
 		<property name="suffix" value=".html" />
 	</bean>
 
-	<!-- 启用注解 -->
+	<!-- 启用注解方式 -->
 	<context:annotation-config />
-	
+	<!-- 启动mvc注解(@ResponseBody返回中文乱码的处理),不加不生效 -->
+	<mvc:annotation-driven />
 	<!-- 添加一个类路径配置，让Spring 容器知道需要扫描该类路径下所有可以加载到容器中的类 -->
 	<context:component-scan base-package="com.hyf.controller" />
-
+	<!-- 引入dubbo消费者端配置文件 -->
 	<import resource="dubbo-consumer.xml"></import>
 
 </beans>

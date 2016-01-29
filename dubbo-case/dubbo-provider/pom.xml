@@ -20,7 +20,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.hyf</groupId>
-			<artifactId>dubbo-openapi-implement</artifactId>
+			<artifactId>dubbo-openapi-interface-impl</artifactId>
 			<version>[0,)</version>
 		</dependency>
 	</dependencies>

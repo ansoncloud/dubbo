@@ -23,14 +23,15 @@ public class MethodReflect
 	 * @return 返回接口方法的返回值 
 	 * @throws Exception
 	 */
-	public static Object invokeMethod(Object owner, String methodName, Object[] args) throws Exception
+	@SuppressWarnings("rawtypes")
+	public static Object invokeMethod(Object classObject, String methodName, Object[] args) throws Exception
 	{
 		Method method = null;
 		Object result = null;
 		try
 		{
 			// 1、先获取对象所属的类
-			Class ownerClass = owner.getClass();
+			Class ownerClass = classObject.getClass();
 			// 2、获取需要调用的方法
 			for (Method m : ownerClass.getDeclaredMethods())
 			{
@@ -41,7 +42,7 @@ public class MethodReflect
 				}
 			}
 			// 3、调用该方法
-			result = method.invoke(owner, args);
+			result = method.invoke(classObject, args);
 			return result;
 		}
 		catch (Exception e)
