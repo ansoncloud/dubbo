@@ -19,10 +19,17 @@
 	</properties>
 
 	<dependencies>
+		<!-- google的json包开始 -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<!-- google的json结束 -->
 		<dependency>
 			<groupId>com.hyf</groupId>
 			<artifactId>dubbo-openapi-interface</artifactId>
-			<!--<version>${project.version}</version>--><!-- 这样是从maven下载和上面parent的version的版本0.0.1-SNAPSHOT一样的包下来 -->
+			<!--<version>${project.version}</version> --><!-- 这样是从maven下载和上面parent的version的版本0.0.1-SNAPSHOT一样的包下来 -->
 			<version>[0,)</version><!-- 这样是从maven下载大于0最大的版本包下来 -->
 		</dependency>
 		<dependency>

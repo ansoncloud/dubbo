@@ -5,7 +5,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import com.hyf.entity.RetStruct;
+import com.hyf.entity.ResultStruct;
 
 
 public class MyException extends RuntimeException 
@@ -20,7 +20,7 @@ public class MyException extends RuntimeException
 	public MyException(int ret, String message)
 	{
 		//返回错误信息
-		new RetStruct(ret, message);
+		new ResultStruct(ret, message);
 		// 记录错误日志
 		Logger logger = Logger.getLogger(this.getClass());
 		//记录第一次错误
@@ -52,7 +52,7 @@ public class MyException extends RuntimeException
 		Logger logger = Logger.getLogger(this.getClass());
 		//记录第一次错误
 		logger.error(sb.toString()+"\t");
-		new RetStruct(ret, message);
+		new ResultStruct(ret, message);
 	}
 
 	

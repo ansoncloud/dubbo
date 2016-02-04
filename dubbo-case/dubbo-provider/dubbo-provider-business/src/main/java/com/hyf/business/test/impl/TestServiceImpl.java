@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.hyf.entity.RetStruct;
+import com.hyf.entity.ResultStruct;
 import com.hyf.exception.MyException;
 import com.hyf.utils.CheckJSONDataUtil;
 
@@ -51,7 +51,7 @@ public class TestServiceImpl
 			result.put("time", new Date());
 			result.put("time2", new java.sql.Date(System.currentTimeMillis()));
 			result.put("time3", new Timestamp(System.currentTimeMillis()));
-			return new RetStruct("调用provider里的接口成功.","data",result).toString();
+			return new ResultStruct("调用provider里的接口成功.","data",result).toString();
 		}
 		catch (Exception e)
 		{
@@ -87,7 +87,7 @@ public class TestServiceImpl
 			Map<String, Object> result = new HashMap<String,Object>();
 			result.put("total", 1);
 			result.put("rows", data);
-			return new RetStruct("调用provider里的接口成功.","data",result).toString();
+			return new ResultStruct("调用provider里的接口成功.","data",result).toString();
 		}
 		catch (Exception e)
 		{

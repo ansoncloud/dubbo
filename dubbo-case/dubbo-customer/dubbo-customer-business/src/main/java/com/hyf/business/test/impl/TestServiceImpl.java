@@ -7,9 +7,8 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.hyf.entity.RetStruct;
-import com.hyf.global.GlobalContainer;
-import com.hyf.openapi.interfaces.ApiInterface;
+import com.hyf.entity.ResultStruct;
+import com.hyf.utils.ApiUtil;
 import com.hyf.utils.CheckJSONDataUtil;
 
 /**
@@ -37,12 +36,14 @@ public class TestServiceImpl
 	public String get(String data) throws Exception
 	{
 		Map<String,Object> dataMap = CheckJSONDataUtil.checkJSONData(data);
-		ApiInterface service = (ApiInterface) GlobalContainer.getApplicationContext().getBean("providerService");
-		dataMap.put("method", "maplemart.provider.test.get");
-		String resultdata = service.doPost(JSONObject.fromObject(dataMap).toString());
+//		ApiInterface service = (ApiInterface) GlobalContainer.getApplicationContext().getBean("providerService");
+//		dataMap.put("interfaceName", "maplemart.provider.test.get");
+//		String resultdata = service.doPost(JSONObject.fromObject(dataMap).toString());
+		String resultdata = ApiUtil.dubbo(ApiUtil.PROVIDER_SERVICE, "maplemart.provider.test.get", JSONObject.fromObject(dataMap).toString());
 		Map<String, Object> result = new HashMap<String,Object>();
 		result.put("total", 1);
 		result.put("rows",dataMap);
-		return new RetStruct("消费者customerService服务的提供者TestServiceImpl类的get方法调用成功.","data",result).toString();
+		result.put("resultdata",resultdata);
+		return new ResultStruct("消费者customerService服务的提供者TestServiceImpl类的get方法调用成功.","data",result).toString();
 	}
 }

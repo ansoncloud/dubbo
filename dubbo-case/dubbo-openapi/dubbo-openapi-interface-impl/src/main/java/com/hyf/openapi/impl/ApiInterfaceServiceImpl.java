@@ -2,19 +2,18 @@ package com.hyf.openapi.impl;
 
 import java.util.Map;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hyf.entity.RetStruct;
+import com.hyf.entity.ResultStruct;
 import com.hyf.global.GlobalContainer;
 import com.hyf.openapi.entity.MethodArgs;
 import com.hyf.openapi.interfaces.ApiInterface;
 import com.hyf.openapi.utils.DataValidator;
 import com.hyf.openapi.utils.MethodArgsUtil;
+import com.hyf.openapi.utils.MethodReflect;
 import com.hyf.utils.CheckJSONDataUtil;
-import com.hyf.utils.MethodReflect;
 
 public class ApiInterfaceServiceImpl implements ApiInterface
 {
@@ -54,7 +53,7 @@ public class ApiInterfaceServiceImpl implements ApiInterface
 		catch (Exception e)
 		{
 			log.error(e.getMessage());
-			return new RetStruct(-1,"调用doPost方法处理异常."+e.getMessage()).toString();
+			return new ResultStruct(-1,"调用doPost方法处理异常."+e.getMessage()).toString();
 		}
 	}
 	

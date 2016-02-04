@@ -1,8 +1,6 @@
-package com.hyf.utils;
+package com.hyf.http.util;
 
 import java.lang.reflect.Method;
-
-import com.hyf.exception.MyException;
 
 /**
  * 接口方法调用与解析
@@ -24,7 +22,7 @@ public class MethodReflect
 	 * @throws Exception
 	 */
 	@SuppressWarnings("rawtypes")
-	public static Object invokeMethod(Object classObject, String methodName, Object[] args) throws Exception
+	public static Object invokeMethod(Object classObject, String methodName, Object[] args)
 	{
 		Method method = null;
 		Object result = null;
@@ -47,8 +45,7 @@ public class MethodReflect
 		}
 		catch (Exception e)
 		{
-			if (e.equals(MyException.class)) throw e;
-			else throw new MyException(11, "调用"+method+"方法."+e.getMessage());
+			throw new RuntimeException("调用"+method+"方法."+e.getMessage(),e);
 		}
 	}
 
