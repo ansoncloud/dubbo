@@ -7,7 +7,7 @@ import com.hyf.openapi.entity.MethodArgs;
 import com.hyf.security.AesEncryption;
 import com.hyf.utils.ObjectParser;
 
-public class MethodArgsUtil
+public class CopyOfMethodArgsUtil
 {
 	/**
 	 * 检查方法名称、服务名称、参数数据，并返回对象
@@ -30,8 +30,6 @@ public class MethodArgsUtil
 			{
 				throw new MyException(-1, "interfaceName参数为空.");
 			}
-			//2、aes解密参数数据
-			data = AesEncryption.decrypt(data,"1234567890123456");
 			//3、获取对应参数返回
 			className = getClassName(interfaceName);
 			methodName = getMethodName(interfaceName);

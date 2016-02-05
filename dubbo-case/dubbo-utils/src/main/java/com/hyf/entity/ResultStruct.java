@@ -27,6 +27,8 @@ public class ResultStruct
 
 	public ResultStruct(String resultdesc, String key, Object value)
 	{
+		retMap = new HashMap<String, Object>();
+		retMap.put("resultcode", 0);
 		retMap.put("resultdesc", resultdesc);
 		retMap.put(key, value);
 	}

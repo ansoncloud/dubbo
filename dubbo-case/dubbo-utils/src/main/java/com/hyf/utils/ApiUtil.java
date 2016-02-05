@@ -27,7 +27,7 @@ public class ApiUtil
 	{
 			ApplicationContext ctx = GlobalContainer.getApplicationContext();
 			ApiInterface service = (ApiInterface) ctx.getBean(serviceName);
-			JSONObject obj = JSONObject.fromObject(data);
+			JSONObject obj = new JSONObject();
 			obj.put("interfaceName",interfaceName);
 			obj.put("data", data);
 			String result = service.doPost(obj.toString());

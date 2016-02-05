@@ -20,7 +20,7 @@
 		url="dubbo://192.168.87.89:20001" check="false" />
 
 	<!-- 商家服务系统 -->
-	<dubbo:reference id="consumerService"
+	<dubbo:reference id="customerService"
 		interface="com.hyf.openapi.interfaces.ApiInterface" timeout="40000"
 		url="dubbo://192.168.87.89:20002" check="false" />
 

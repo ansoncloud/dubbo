@@ -19,6 +19,7 @@ import io.netty.handler.codec.http.multipart.Attribute;
 import io.netty.handler.codec.http.multipart.DefaultHttpDataFactory;
 import io.netty.handler.codec.http.multipart.HttpDataFactory;
 import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder;
+import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder.EndOfDataDecoderException;
 import io.netty.handler.codec.http.multipart.InterfaceHttpData;
 import io.netty.handler.codec.http.multipart.InterfaceHttpData.HttpDataType;
 import io.netty.util.CharsetUtil;
@@ -64,7 +65,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<Object>
 	protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception
 	{
 		String buf = "";// http请求后返回的数据
-		// 传入msg对象是否是HttpRequest
+		//a、 传入msg对象是否是HttpRequest
 		if (msg instanceof HttpRequest)
 		{
 			// 1、记录打印信息
@@ -97,6 +98,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<Object>
 				// 每次请求都会有这个请求的，直接return就可以了
 				if (uri.getPath().equals("/favicon.ico"))
 				{
+					ctx.close();
 					return;
 				}
 				// 自己定义的请求路径才通过
@@ -122,91 +124,52 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<Object>
 			// 5、GET请求处理
 			if (request.getMethod().equals(HttpMethod.GET))
 			{
+				requestbuffer.append("\r\n############################END REQUEST##########################\r\n");
 				try
 				{
-					requestbuffer.append("\r\n############################END REQUEST##########################\r\n");
-					Map<String, String> paramsMap = new HashMap<String, String>();
 					// 获取http请求传入的参数
-					QueryStringDecoder queryStringDecoder = new QueryStringDecoder(request.getUri());
-					Map<String, List<String>> paramsList = queryStringDecoder.parameters();
-					if (!paramsList.isEmpty())
-					{
-						for (Entry<String, List<String>> params : paramsList.entrySet())
-						{
-							String key = params.getKey().trim();
-							List<String> vals = params.getValue();
-							if (vals.size() > 0) paramsMap.put(key, vals.get(0).trim());
-						}
-					}
+					Map<String, String> paramsMap = getHttpGetParams(request);
 					// 调用对应的接口
 					buf = doPost(paramsMap);
 					requestbuffer.append("请求完返回结果信息: ");
 					requestbuffer.append(buf + "\r\n");
 					log.info(requestbuffer.toString());
 					// 将http响应的结果返回给用户
-					writeResponse(request, ctx, new ResultStruct(-1, buf).toString());
+					writeResponse(request, ctx,buf);
 					return;
 				}
 				catch (Exception e)
 				{
-					requestbuffer.append("解释HTTP/HTTPS GET协议出错." + e.getMessage());
+					buf = "HTTP/HTTPS POST处理出错." + e.getMessage();
+					requestbuffer.append("请求完返回结果信息: ");
+					requestbuffer.append(buf + "\r\n");
 					log.error(requestbuffer.toString());
-					buf = "解释HTTP/HTTPS GET协议出错." + e.getMessage();
 					writeResponse(request, ctx, new ResultStruct(-1, buf).toString());
 					return;
 				}
 			}
-
 			// 6、POST请求处理
 			if (request.getMethod().equals(HttpMethod.POST))
 			{
+				requestbuffer.append("\r\n############################END REQUEST##########################\r\n");
 				try
 				{
-					requestbuffer.append("\r\n############################END REQUEST##########################\r\n");
-					Map<String, String> paramsMap = new HashMap<String, String>();
-					HttpPostRequestDecoder decoder = new HttpPostRequestDecoder(factory, request);
-					while (decoder.hasNext())
-					{
-						InterfaceHttpData ifhData = decoder.next();
-						if (ifhData != null)
-						{
-							try
-							{
-								/** HttpDataType有三种类型 Attribute, FileUpload, InternalAttribute */
-								if (ifhData.getHttpDataType() == HttpDataType.Attribute)
-								{
-									Attribute attribute = (Attribute) ifhData;
-									String value = attribute.getValue();
-									String key = attribute.getName();
-									paramsMap.put(key, value);
-								}
-							}
-							finally
-							{
-								ifhData.release();
-							}
-						}
-					}
-					if (paramsMap.isEmpty())
-					{
-						HttpContent httpContent = (HttpContent) request;
-						String data = httpContent.content().toString(CharsetUtil.UTF_8);
-						JSONObject obj = JSONObject.fromObject(data);
-						paramsMap.putAll(obj);
-					}
+					//获取http post请求参数
+					Map<String,String> paramsMap = getHttpPostParams(request);
 					buf = doPost(paramsMap);
 					requestbuffer.append("请求完返回结果信息: ");
 					requestbuffer.append(buf + "\r\n");
 					log.info(requestbuffer.toString());
 					// 将http响应的结果返回给用户
-					writeResponse(request, ctx, new ResultStruct(-1, buf).toString());
+					writeResponse(request, ctx,buf);
 					return;
 				}
 				catch (Exception e)
 				{
-					requestbuffer.append("解释HTTP/HTTPS POST协议出错." + e.getMessage());
+					buf = "HTTP/HTTPS POST处理出错." + e.getMessage();
+					requestbuffer.append("请求完返回结果信息: ");
+					requestbuffer.append(buf + "\r\n");
 					log.error(requestbuffer.toString());
-					buf = "解释HTTP/HTTPS POST协议出错." + e.getMessage();
 					writeResponse(request, ctx, new ResultStruct(-1, buf).toString());
 					return;
 				}
@@ -219,7 +182,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<Object>
 			writeResponse(request, ctx, new ResultStruct(-1, buf).toString());
 			return;
 		}
-		// 如果请求有误 将http响应的结果返回给用户(传入msg对象不是HttpRequest)
+		//b、 如果请求有误 将http响应的结果返回给用户(传入msg对象不是HttpRequest)
 		buf = "http请求失败.";
 		requestbuffer.append("请求完返回结果信息: ");
 		requestbuffer.append(buf + "\r\n");
@@ -258,8 +221,97 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<Object>
 		ChannelFuture future = ctx.writeAndFlush(response);
 		// 如果http不是长连接那一定要关闭
 		if (bkeepAlive) future.addListener(ChannelFutureListener.CLOSE);
+		log.info("---------------服务器主动关闭远程链接.---------------------");
 	}
 
+	/**
+	 * 获取http post请求参数数据
+	 * @author 黄永丰
+	 * @createtime 2016年2月5日
+	 * @param request httprequest对象
+	 * @return 返回http post请求传入的参数
+	 */
+	private Map<String, String> getHttpPostParams(HttpRequest request) 
+	{
+		Map<String, String> paramsMap = new HashMap<String, String>();
+		try
+		{
+			// 正常post传入参数id=12&name=maple
+			HttpPostRequestDecoder decoder = new HttpPostRequestDecoder(factory, request);
+			while (decoder.hasNext())
+			{
+				InterfaceHttpData ifhData = decoder.next();
+				if (ifhData != null)
+				{
+					try
+					{
+						/** HttpDataType有三种类型 Attribute, FileUpload, InternalAttribute */
+						if (ifhData.getHttpDataType() == HttpDataType.Attribute)
+						{
+							Attribute attribute = (Attribute) ifhData;
+							String value = attribute.getValue();
+							String key = attribute.getName();
+							paramsMap.put(key, value);
+						}
+					}
+					finally
+					{
+						ifhData.release();
+					}
+				}
+			}
+			// 直接json方式传入参数{id:12,name:maple}
+			if (paramsMap.isEmpty())
+			{
+				HttpContent httpContent = (HttpContent) request;
+				String data = httpContent.content().toString(CharsetUtil.UTF_8);
+				JSONObject obj = JSONObject.fromObject(data);
+				paramsMap.putAll(obj);
+			}
+		}
+		catch (EndOfDataDecoderException ex)
+		{
+			//最后参数异常不用处理
+			log.info(ex.getMessage());
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeException("解释HTTP/HTTPS POST协议出错." + e.getMessage(),e);
+		}
+		return paramsMap;
+	}
+	
+	/**
+	 * 获取http get请求参数数据
+	 * @author 黄永丰
+	 * @createtime 2016年2月5日
+	 * @param request httprequest对象
+	 * @return 返回http post请求传入的参数
+	 */
+	private Map<String, String> getHttpGetParams(HttpRequest request)
+	{
+		Map<String, String> paramsMap = new HashMap<String, String>();
+		try
+		{
+			QueryStringDecoder queryStringDecoder = new QueryStringDecoder(request.getUri());
+			Map<String, List<String>> paramsList = queryStringDecoder.parameters();
+			if (!paramsList.isEmpty())
+			{
+				for (Entry<String, List<String>> params : paramsList.entrySet())
+				{
+					String key = params.getKey().trim();
+					List<String> vals = params.getValue();
+					if (vals.size() > 0) paramsMap.put(key, vals.get(0).trim());
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeException("解释HTTP/HTTPS GET协议出错." + e.getMessage(), e);
+		}
+		return paramsMap;
+	}
+	
 	/**
 	 * 获取dubbo服务并调用对应的接口
 	 * @author 黄永丰
@@ -271,7 +323,7 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<Object>
 	{
 		if (!paramsMap.containsKey("interfaceName"))
 		{
-			return "参数并不包含interfaceName,请检查提交的参数.";
+			return new ResultStruct(-1,"参数并不包含interfaceName,请检查提交的参数.").toString();
 		}
 		// 获取接口名称
 		String interfaceName = paramsMap.get("interfaceName").toLowerCase();
@@ -279,19 +331,20 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<Object>
 		String serviceName = getServiceName(interfaceName);
 		if (serviceName == null)
 		{
-			return "参数interfaceName出错,请检查提交的参数.";
+			return new ResultStruct(-1, "参数interfaceName出错,请检查提交的参数.").toString();
 		}
 		// 获取dubbo服务对象
 		Object client = GlobalContainer.getApplicationContext().getBean(serviceName);
 		if (client == null)
 		{
-			return "服务名称为" + serviceName + "为空,请联系后台管理员.";
+			return new ResultStruct(-1, "服务名称为" + serviceName + "为空,请联系后台管理员.").toString();
 		}
 		// 用反射调用对应系统的方法
-		String data = (String) MethodReflect.invokeMethod(client, "doPost", new Object[] { paramsMap });
+		String params = JSONObject.fromObject(paramsMap).toString();
+		String data = (String) MethodReflect.invokeMethod(client, "doPost", new Object[] { params });
 		if (data == null)
 		{
-			return "调用系统服务接口方法失败.";
+			return new ResultStruct(-1, "调用系统服务接口方法失败.").toString();
 		}
 		return data;
 	}

@@ -28,7 +28,7 @@ public class CheckJSONDataUtil
 	{
 		if(data == null || "".equals(data.trim()))
 		{
-			throw new MyException(10507, "传入的参数data不能为空.");
+			throw new MyException(-1, "传入的参数data不能为空.");
 		}
 		Map<String,Object> dataMap = new HashMap<String,Object>();
 		try
@@ -37,7 +37,7 @@ public class CheckJSONDataUtil
 		}
 		catch(Exception e)
 		{
-			throw new MyException(10508, "解析参数出错,请检查传入参数JSON格式是否正确.");
+			throw new MyException(-1, "解析参数出错,请检查传入参数JSON格式是否正确."+e.getMessage());
 		}
 		return dataMap;
 	}

@@ -3,11 +3,10 @@ package com.hyf.business.test.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.json.JSONObject;
-
 import org.springframework.stereotype.Service;
 
 import com.hyf.entity.ResultStruct;
+import com.hyf.security.AesEncryption;
 import com.hyf.utils.ApiUtil;
 import com.hyf.utils.CheckJSONDataUtil;
 
@@ -39,7 +38,7 @@ public class TestServiceImpl
 //		ApiInterface service = (ApiInterface) GlobalContainer.getApplicationContext().getBean("providerService");
 //		dataMap.put("interfaceName", "maplemart.provider.test.get");
 //		String resultdata = service.doPost(JSONObject.fromObject(dataMap).toString());
-		String resultdata = ApiUtil.dubbo(ApiUtil.PROVIDER_SERVICE, "maplemart.provider.test.get", JSONObject.fromObject(dataMap).toString());
+		String resultdata = ApiUtil.dubbo(ApiUtil.PROVIDER_SERVICE, "maplemart.provider.test.get",data);
 		Map<String, Object> result = new HashMap<String,Object>();
 		result.put("total", 1);
 		result.put("rows",dataMap);

@@ -1,42 +1,55 @@
 package com.hyf.http.entity;
 
+import java.util.HashMap;
+import java.util.Map;
 
+import net.sf.json.JSONObject;
+
+import com.hyf.http.util.IJsonConfig;
 
 public class ResultStruct
 {
-	private int resultcode;
-	private String resultdesc;
-	
+	private Map<String, Object> retMap;
+
+	public ResultStruct()
+	{
+		retMap = new HashMap<String, Object>();
+		retMap.put("resultcode", 0);
+		retMap.put("resultdesc", "success");
+	}
+
+	public ResultStruct(String resultdesc)
+	{
+		retMap = new HashMap<String, Object>();
+		retMap.put("resultcode", 0);
+		retMap.put("resultdesc", resultdesc);
+	}
+
+	public ResultStruct(String resultdesc, String key, Object value)
+	{
+		retMap.put("resultdesc", resultdesc);
+		retMap.put(key, value);
+	}
+
+	public ResultStruct(String resultdesc, Map<String, Object> map)
+	{
+		retMap = map;
+		retMap.put("resultcode", 0);
+		retMap.put("resultdesc", resultdesc);
+	}
+
 	public ResultStruct(int resultcode, String resultdesc)
 	{
-		super();
-		this.resultcode = resultcode;
-		this.resultdesc = resultdesc;
-	}
-	
-	public void setResultcode(int resultcode)
-	{
-		this.resultcode = resultcode;
-	}
-	public void setResultdesc(String resultdesc)
-	{
-		this.resultdesc = resultdesc;
-	}
-	public int getResultcode()
-	{
-		return resultcode;
-	}
-	public String getResultdesc()
-	{
-		return resultdesc;
+		retMap = new HashMap<String, Object>();
+		retMap.put("resultcode", resultcode);
+		retMap.put("resultdesc", resultdesc);
 	}
 
 	@Override
 	public String toString()
 	{
-		return "{resultcode=" + resultcode + ", resultdesc=" + resultdesc + "}";
+		String result = JSONObject.fromObject(retMap,IJsonConfig.getInstance()).toString();
+		return result;
 	}
-	
-	
 	
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class ObjectParser
 {
-	static public Date toDate(Object date) throws ParseException
+	public static Date toDate(Object date) throws ParseException
 	{
 		if (date == null)
 		{
@@ -30,34 +30,34 @@ public class ObjectParser
 		return result;
 	}
 
-	static public Integer toInteger(Object data)
+	 public static Integer toInteger(Object data)
 	{
 		if (data == null)
 		{
 			return null;
 		}
-		return Double.valueOf(data.toString()).intValue();
+		return Integer.valueOf(data.toString());
 	}
 
-	static public Long toLong(Object data)
+	 public static Long toLong(Object data)
 	{
 		if (data == null)
 		{
 			return null;
 		}
-		return Double.valueOf(data.toString()).longValue();
+		return Long.valueOf(data.toString());
 	}
 
-	static public Short toShort(Object data)
+	 public static Short toShort(Object data)
 	{
 		if (data == null)
 		{
 			return null;
 		}
-		return Double.valueOf(data.toString()).shortValue();
+		return Short.valueOf(data.toString());
 	}
 
-	static public Double toDouble(Object data)
+	 public static Double toDouble(Object data)
 	{
 		if (data == null)
 		{
@@ -74,4 +74,14 @@ public class ObjectParser
 		}
 		return String.valueOf(data.toString());
 	}
+
+	public static Boolean toBoolean(Object data)
+	{
+		if (data == null)
+		{
+			return null;
+		}
+		return Boolean.valueOf(data.toString());
+	}
+	
 }

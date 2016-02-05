@@ -10,6 +10,7 @@ import com.hyf.entity.ResultStruct;
 import com.hyf.global.GlobalContainer;
 import com.hyf.openapi.entity.MethodArgs;
 import com.hyf.openapi.interfaces.ApiInterface;
+import com.hyf.openapi.utils.CopyOfMethodArgsUtil;
 import com.hyf.openapi.utils.DataValidator;
 import com.hyf.openapi.utils.MethodArgsUtil;
 import com.hyf.openapi.utils.MethodReflect;
@@ -35,7 +36,8 @@ public class ApiInterfaceServiceImpl implements ApiInterface
 		{
 			// 1、获取方法名称、服务名称、参数 数据的对象
 			Map<String,Object> dataMap = CheckJSONDataUtil.checkJSONData(postdata);
-			MethodArgs methodargs = MethodArgsUtil.checkPostMethodData(dataMap);
+			MethodArgs methodargs = CopyOfMethodArgsUtil.checkPostMethodData(dataMap);//dubbo-customer和dubbo-provider用它，其它的用下面个，有加密等验证
+//			MethodArgs methodargs = MethodArgsUtil.checkPostMethodData(dataMap);
 			// 2、获取传入调用接口方法参数的数据
 			String validData = methodargs.getMethodData();
 			// 3、获取传入调用接口的类名称
