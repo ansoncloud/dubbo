@@ -91,7 +91,7 @@ public class HttpsUtil
 				outStream.write(buffer, 0, len);
 			}
 			is.close();
-			return new String(outStream.toByteArray(), "utf-8");
+			return new String(outStream.toByteArray(),charset);
 		}
 		return null;
 	}
@@ -132,7 +132,7 @@ public class HttpsUtil
 				}
 				try
 				{
-					return new String(outStream.toByteArray(), "utf-8");
+					return new String(outStream.toByteArray(),charset);
 				}
 				catch (Exception e)
 				{
@@ -162,17 +162,15 @@ public class HttpsUtil
 	/**
 	 * 向指定URL发送GET方法的请求 在代码里会拼成url?name1=value1&name2=value2
 	 * @param url 发送请求的URL
-	 * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
 	 * @return URL 所代表远程资源的响应结果
 	 */
-	public static String get(String url, String param)
+	public static String get(String url)
 	{
 		String result = "";
 		BufferedReader in = null;
 		try
 		{
-			String urlNameString = url + "?" + param;
-			URL realUrl = new URL(urlNameString);
+			URL realUrl = new URL(url);
 			// 打开和URL之间的连接
 			URLConnection connection = realUrl.openConnection();
 			// 设置通用的请求属性
@@ -203,7 +201,7 @@ public class HttpsUtil
 				if (in != null)
 					in.close();
 			}
-			catch (Exception e2)
+			catch (Exception ex)
 			{
 			}
 		}

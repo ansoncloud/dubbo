@@ -43,7 +43,7 @@ public class ApiUtil
 	 * @param data 传入数据
 	 * @return 调用完接口数据
 	 */
-	public static String httpPost(String url,String data)
+	public static String httpPost(String url,String interfaceName,String data)
 	{
 		String result = "";
 		try
@@ -53,7 +53,6 @@ public class ApiUtil
 			String openApiUrl = "";
 			String format = "json";
 			String aesdata = AesEncryption.encrypt(data, appSecret);//采用AES加密数据
-			String interfaceName = "";
 			String version = "1.0";//版本
 			String timestamp = String.valueOf(System.currentTimeMillis());
 			String session = "";
@@ -80,10 +79,98 @@ public class ApiUtil
 	 */
 	public static String httpGet(String serviceName,String interfaceName,String data)
 	{
-			
-			return "";
+		String result = "";
+		try
+		{
+			String appKey = "";//授权给应用的key
+			String appSecret = "";//授权给应用的密钥
+			String openApiUrl = "";
+			String format = "json";
+			String aesdata = AesEncryption.encrypt(data, appSecret);//采用AES加密数据
+			String version = "1.0";//版本
+			String timestamp = String.valueOf(System.currentTimeMillis());
+			String session = "";
+			//签名(用md5加密 appKey + interfaceName + format + aesdata + version + timestamp + session + appKey)
+			String sign = MD5Util.getMD5(appKey + interfaceName + format + aesdata + version + timestamp + session + appSecret);
+			String param = "appKey=" + appKey + "&interfaceName=" + interfaceName + "&format=" + format + "&data=" + aesdata + "&version=" + version + "&timestamp=" + timestamp + "&session=" + session + "&sign=" + sign;
+			openApiUrl = openApiUrl+"?"+param;
+			result = HttpsUtil.get(openApiUrl);
+		}
+		catch (Exception e)
+		{
+			result = e.getMessage();
+		}
+		return result;
 	}
 	
+	/**
+	 * https post方式调用服务
+	 * @author 黄永丰
+	 * @createtime 2015年7月21日
+	 * @param serviceName 服务名称
+	 * @param method 接口方法名称
+	 * @param data 传入数据
+	 * @return 调用完接口数据
+	 */
+	public static String httpSSLPost(String url,String interfaceName,String data)
+	{
+		String result = "";
+		try
+		{
+			String appKey = "";//授权给应用的key
+			String appSecret = "";//授权给应用的密钥
+			String openApiUrl = "";
+			String format = "json";
+			String aesdata = AesEncryption.encrypt(data, appSecret);//采用AES加密数据
+			String version = "1.0";//版本
+			String timestamp = String.valueOf(System.currentTimeMillis());
+			String session = "";
+			//签名(用md5加密 appKey + interfaceName + format + aesdata + version + timestamp + session + appKey)
+			String sign = MD5Util.getMD5(appKey + interfaceName + format + aesdata + version + timestamp + session + appSecret);
+			String param = "appKey=" + appKey + "&interfaceName=" + interfaceName + "&format=" + format + "&data=" + aesdata + "&version=" + version + "&timestamp=" + timestamp + "&session=" + session + "&sign=" + sign;
+			result = HttpsUtil.sslPost(openApiUrl, param,"UTF-8");
+		}
+		catch (Exception e)
+		{
+			result = e.getMessage();
+		}
+		return result;
+	}
+	
+	/**
+	 * https get方式调用服务
+	 * @author 黄永丰
+	 * @createtime 2015年7月21日
+	 * @param serviceName 服务名称
+	 * @param method 接口方法名称
+	 * @param data 传入数据
+	 * @return 调用完接口数据
+	 */
+	public static String httpSSLGet(String serviceName,String interfaceName,String data)
+	{
+		String result = "";
+		try
+		{
+			String appKey = "";//授权给应用的key
+			String appSecret = "";//授权给应用的密钥
+			String openApiUrl = "";
+			String format = "json";
+			String aesdata = AesEncryption.encrypt(data, appSecret);//采用AES加密数据
+			String version = "1.0";//版本
+			String timestamp = String.valueOf(System.currentTimeMillis());
+			String session = "";
+			//签名(用md5加密 appKey + interfaceName + format + aesdata + version + timestamp + session + appKey)
+			String sign = MD5Util.getMD5(appKey + interfaceName + format + aesdata + version + timestamp + session + appSecret);
+			String param = "appKey=" + appKey + "&interfaceName=" + interfaceName + "&format=" + format + "&data=" + aesdata + "&version=" + version + "&timestamp=" + timestamp + "&session=" + session + "&sign=" + sign;
+			openApiUrl = openApiUrl+"?"+param;
+			result = HttpsUtil.sslGet(openApiUrl,"UTF-8");
+		}
+		catch (Exception e)
+		{
+			result = e.getMessage();
+		}
+		return result;
+	}
 	
 	
 }
